@@ -1,13 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
-class Book extends Component {
-  render() {
-    const { filteredBooks } = this.props;
+const Book = (props) => {
     return (
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {filteredBooks.length > 0 &&
-          filteredBooks.map(book => (
+          {props.filteredBooks.length > 0 &&
+          props.filteredBooks.map(book => (
             <li key={book.id}>
               <div className="book">
                 <div className="book-top">
@@ -23,7 +21,7 @@ class Book extends Component {
                     <select
                       name="shelf"
                       value={book.shelf}
-                      onChange={e => this.props.changeShelf(e, book)}
+                      onChange={e => props.changeShelf(e, book)}
                     >
                       <option value="none" disabled>
                         Move to...
@@ -51,7 +49,6 @@ class Book extends Component {
         </ol>
       </div>
     );
-  }
 }
 
 export default Book;
