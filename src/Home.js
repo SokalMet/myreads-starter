@@ -13,19 +13,19 @@ class HomePage extends Component {
       this.setState({ books });
     });
   }
-  changeShelf = (e, changedBook) => {
+  changeShelf = (e, book) => {
     const books = this.state.books;
     const shelf = e.target.value;
-    changedBook.shelf = shelf;
+    book.shelf = shelf;
     this.setState({
       books
     });
 
-    BooksAPI.update(changedBook, shelf).then(() => {
+    BooksAPI.update(book, shelf).then(() => {
       this.setState(state => ({
         books: state.books
-          .filter(b => b.id !== changedBook.id)
-          .concat([changedBook])
+          .filter(b => b.id !== book.id)
+          .concat([book])
       }));
     });
   };
@@ -53,7 +53,7 @@ class HomePage extends Component {
               {currentlyReading.length > 0 &&
               <Book
                 filteredBooks={currentlyReading}
-                changeShelf={this.props.changeShelf}
+                changeShelf={this.changeShelf}
               />}
             </div>
             <div className="bookshelf">
@@ -61,7 +61,7 @@ class HomePage extends Component {
               {wantToRead.length > 0 &&
               <Book
                 filteredBooks={wantToRead}
-                changeShelf={this.props.changeShelf}
+                changeShelf={this.changeShelf}
               />}
             </div>
             <div className="bookshelf">
@@ -69,7 +69,7 @@ class HomePage extends Component {
               {read.length > 0 &&
               <Book
                 filteredBooks={read}
-                changeShelf={this.props.changeShelf}
+                changeShelf={this.changeShelf}
               />}
             </div>
           </div>

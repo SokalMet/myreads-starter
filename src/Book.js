@@ -3,13 +3,12 @@ import React, { Component } from "react";
 class Book extends Component {
   render() {
     const { filteredBooks } = this.props;
-
     return (
       <div className="bookshelf-books">
         <ol className="books-grid">
           {filteredBooks.length > 0 &&
-          filteredBooks.map(filteredBook => (
-            <li key={filteredBook.id}>
+          filteredBooks.map(book => (
+            <li key={book.id}>
               <div className="book">
                 <div className="book-top">
                   <div
@@ -17,14 +16,14 @@ class Book extends Component {
                     style={{
                       width: 128,
                       height: 190,
-                      backgroundImage: `url(${filteredBook.imageLinks.thumbnail})`
+                      backgroundImage: `url(${book.imageLinks.thumbnail})`
                     }}
                   />
                   <div className="book-shelf-changer">
                     <select
                       name="shelf"
-                      onChange={e => this.props.changeShelf(e, filteredBook)}
-                      value={filteredBook.shelf}
+                      value={book.shelf}
+                      onChange={e => this.props.changeShelf(e, book)}
                     >
                       <option value="none" disabled>
                         Move to...
@@ -41,12 +40,10 @@ class Book extends Component {
                   </div>
                 </div>
                 <div className="book-title">
-                  {filteredBook.title}
+                  {book.title}
                 </div>
                 <div className="book-authors">
-                  {filteredBook.authors
-                    ? filteredBook.authors.join(", ")
-                    : ""}
+                  {book.authors ? book.authors.join(", ") : ""}
                 </div>
               </div>
             </li>
