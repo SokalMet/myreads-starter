@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import * as BooksAPI from "./BooksAPI";
 
 class SearchBook extends React.Component {
   render() {
@@ -22,7 +21,9 @@ class SearchBook extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <ol className="books-grid">
+            {this.props.allBooks}
+          </ol>
         </div>
       </div>
     )
