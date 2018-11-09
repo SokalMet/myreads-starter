@@ -22,6 +22,7 @@ class SearchBook extends React.Component {
             return {qureiedBooks: books}
           })
         } else {
+          debugger
           this.setState(() => {
             return {qureiedBooks: []}
           })
@@ -31,16 +32,20 @@ class SearchBook extends React.Component {
       this.setState({qureiedBooks: [], enteredText: ''})
     }
   }
-  changeBookShelf = (myBooks) => {
-    let allBooks = BooksAPI.getAll()
-    debugger
-    for(let someBook in myBooks) {
-      for (let book of allBooks) {
-        if(book.id === someBook.id) {
-          someBook.shelf = book.shelf
-        }
-      }
-    }
+  changeBookShelf = (e, filteredBook) => {
+    const books = this.state.qureiedBooks;
+    const shelf = e.target.value;
+    filteredBook.shelf = e.target.value;
+    this.setState({
+      books
+    })
+
+    BooksAPI.update(filteredBook, shelf).then(() => {
+      this.setState(state => ({
+        qureiedBooks: state.books
+          .filter(b => b.id !== filteredBook.id)
+      }))
+    })
   }
   render() {
     return (
