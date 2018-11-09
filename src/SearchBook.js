@@ -1,13 +1,46 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React from "react"
+import {Link} from "react-router-dom"
+import Book from "./Book"
+
+import * as BooksAPI from './BooksAPI'
 
 class SearchBook extends React.Component {
   state = {
-    enteredText: ''
+    enteredText: '',
+    qureiedBooks: []
   }
   handleChange = (enteredText) => {
-    let text = enteredText.target.value
-    this.setState(() => {return {enteredText: text}})
+    this.setState(() => {return {enteredText: enteredText}})
+    this.search_books(enteredText)
+  }
+  search_books = (serchText) => {
+    if(serchText) {
+      BooksAPI.search(serchText).then((books) => {
+        if(books && books.length) {
+          books = books.filter((book) => (book.imageLinks))
+          this.setState(() => {
+            return {qureiedBooks: books}
+          })
+        } else {
+          this.setState(() => {
+            return {qureiedBooks: []}
+          })
+        }
+      })
+    } else {
+      this.setState({qureiedBooks: [], enteredText: ''})
+    }
+  }
+  changeBookShelf = (myBooks) => {
+    let allBooks = BooksAPI.getAll()
+    debugger
+    for(let someBook in myBooks) {
+      for (let book of allBooks) {
+        if(book.id === someBook.id) {
+          someBook.shelf = book.shelf
+        }
+      }
+    }
   }
   render() {
     return (
@@ -23,13 +56,12 @@ class SearchBook extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-            <input type="text" onChange={this.handleChange} placeholder="Search by title or author" value={this.state.enteredText}/>
+            <input type="text" onChange={event => this.handleChange(event.target.value)} placeholder="Search by title or author" value={this.state.enteredText}/>
 
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
-          </ol>
+          <Book filteredBooks={this.state.qureiedBooks} changeShelf={this.changeBookShelf}/>
         </div>
       </div>
     )
