@@ -22,7 +22,6 @@ class SearchBook extends React.Component {
             return {qureiedBooks: books}
           })
         } else {
-          debugger
           this.setState(() => {
             return {qureiedBooks: []}
           })
@@ -32,18 +31,18 @@ class SearchBook extends React.Component {
       this.setState({qureiedBooks: [], enteredText: ''})
     }
   }
-  changeBookShelf = (e, filteredBook) => {
-    const books = this.state.qureiedBooks;
+  changeShelf = (e, filteredBook) => {
+    const qureiedBooks = this.state.qureiedBooks;
     const shelf = e.target.value;
     filteredBook.shelf = e.target.value;
     this.setState({
-      books
+      qureiedBooks
     })
 
     BooksAPI.update(filteredBook, shelf).then(() => {
       this.setState(state => ({
-        qureiedBooks: state.books
-          .filter(b => b.id !== filteredBook.id)
+        qureiedBooks: state.qureiedBooks
+          .filter(book => book.id !== filteredBook.id)
       }))
     })
   }
@@ -66,7 +65,7 @@ class SearchBook extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          <Book filteredBooks={this.state.qureiedBooks} changeShelf={this.changeBookShelf}/>
+          <Book filteredBooks={this.state.qureiedBooks} changeShelf={this.changeShelf}/>
         </div>
       </div>
     )
