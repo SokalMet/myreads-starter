@@ -7,7 +7,13 @@ import * as BooksAPI from './BooksAPI'
 class SearchBook extends React.Component {
   state = {
     enteredText: '',
-    qureiedBooks: []
+    queriedBooks: [],
+    myBooks: []
+  }
+  componentDidMount() {
+    BooksAPI.getAll().then(myBooks => {
+      this.setState({ myBooks });
+    });
   }
   handleChange = (enteredText) => {
     this.setState(() => {return {enteredText: enteredText}})
@@ -17,31 +23,45 @@ class SearchBook extends React.Component {
     if(serchText) {
       BooksAPI.search(serchText).then((books) => {
         if(books && books.length) {
-          books = books.filter((book) => (book.imageLinks))
+          // books = books.filter((book) => (book.imageLinks))
+          //
+          // for (let book of books) {
+          //   book.shelf = "noneSelected"
+          // }
+
+          books = books.map(book => {
+            book.shelf = this.addShelf(book)
+            return book
+          })
+
           this.setState(() => {
-            return {qureiedBooks: books}
+            return {queriedBooks: books}
           })
         } else {
           this.setState(() => {
-            return {qureiedBooks: []}
+            return {queriedBooks: []}
           })
         }
       })
     } else {
-      this.setState({qureiedBooks: [], enteredText: ''})
+      this.setState({queriedBooks: [], enteredText: ''})
     }
   }
+  addShelf(book) {
+    let hasShelf = this.state.myBooks.filter(myBook => myBook.id === book.id);
+    return hasShelf.length ? "do_not_show" : "noneShelf";
+  }
   changeShelf = (e, filteredBook) => {
-    const qureiedBooks = this.state.qureiedBooks;
+    const queriedBooks = this.state.queriedBooks;
     const shelf = e.target.value;
     filteredBook.shelf = e.target.value;
     this.setState({
-      qureiedBooks
+      queriedBooks
     })
 
     BooksAPI.update(filteredBook, shelf).then(() => {
       this.setState(state => ({
-        qureiedBooks: state.qureiedBooks
+        queriedBooks: state.queriedBooks
           .filter(book => book.id !== filteredBook.id)
       }))
     })
@@ -65,7 +85,7 @@ class SearchBook extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          <Book filteredBooks={this.state.qureiedBooks} changeShelf={this.changeShelf}/>
+          <Book filteredBooks={this.state.queriedBooks} changeShelf={this.changeShelf}/>
         </div>
       </div>
     )

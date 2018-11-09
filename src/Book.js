@@ -5,7 +5,7 @@ const Book = (props) => {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {props.filteredBooks.length > 0 &&
-          props.filteredBooks.map(book => (
+          props.filteredBooks.map(book => (book.shelf !== "do_not_show" &&
             <li key={book.id}>
               <div className="book">
                 <div className="book-top">
@@ -33,7 +33,7 @@ const Book = (props) => {
                         Want to Read
                       </option>
                       <option value="read">Read</option>
-                      <option value="none">None</option>
+                      <option value="noneShelf">None</option>
                     </select>
                   </div>
                 </div>
