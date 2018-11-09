@@ -12,8 +12,8 @@ class SearchBook extends React.Component {
   }
   componentDidMount() {
     BooksAPI.getAll().then(myBooks => {
-      this.setState({ myBooks });
-    });
+      this.setState({ myBooks })
+    })
   }
   handleChange = (enteredText) => {
     this.setState(() => {return {enteredText: enteredText}})
@@ -23,12 +23,6 @@ class SearchBook extends React.Component {
     if(serchText) {
       BooksAPI.search(serchText).then((books) => {
         if(books && books.length) {
-          // books = books.filter((book) => (book.imageLinks))
-          //
-          // for (let book of books) {
-          //   book.shelf = "noneSelected"
-          // }
-
           books = books.map(book => {
             book.shelf = this.addShelf(book)
             return book
@@ -48,13 +42,13 @@ class SearchBook extends React.Component {
     }
   }
   addShelf(book) {
-    let hasShelf = this.state.myBooks.filter(myBook => myBook.id === book.id);
-    return hasShelf.length ? "do_not_show" : "noneShelf";
+    let hasShelf = this.state.myBooks.filter(myBook => myBook.id === book.id)
+    return hasShelf.length ? "do_not_show" : "noneShelf"
   }
   changeShelf = (e, filteredBook) => {
-    const queriedBooks = this.state.queriedBooks;
-    const shelf = e.target.value;
-    filteredBook.shelf = e.target.value;
+    const queriedBooks = this.state.queriedBooks
+    const shelf = e.target.value
+    filteredBook.shelf = e.target.value
     this.setState({
       queriedBooks
     })
@@ -80,7 +74,8 @@ class SearchBook extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-            <input type="text" onChange={event => this.handleChange(event.target.value)} placeholder="Search by title or author" value={this.state.enteredText}/>
+            <input type="text" onChange={event => this.handleChange(event.target.value)}
+                   placeholder="Search by title or author" value={this.state.enteredText}/>
 
           </div>
         </div>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import * as BooksAPI from "./BooksAPI";
+import * as BooksAPI from "./BooksAPI"
 
-import Book from "./Book";
+import Book from "./Book"
 
 class HomePage extends Component {
   state = {
@@ -10,36 +10,36 @@ class HomePage extends Component {
   }
   componentDidMount() {
     BooksAPI.getAll().then(books => {
-      this.setState({ books });
-    });
+      this.setState({ books })
+    })
   }
   changeShelf = (e, book) => {
-    const books = this.state.books;
-    const shelf = e.target.value;
-    book.shelf = shelf;
+    const books = this.state.books
+    const shelf = e.target.value
+    book.shelf = shelf
     this.setState({
       books
-    });
+    })
 
     BooksAPI.update(book, shelf).then(() => {
       this.setState(state => ({
         books: state.books
           .filter(b => b.id !== book.id)
           .concat([book])
-      }));
-    });
-  };
+      }))
+    })
+  }
   render() {
-    const books = this.state.books;
+    const books = this.state.books
     const currentlyReading = books.filter(
       book => book.shelf === "currentlyReading"
-    );
+    )
     const wantToRead = books.filter(
       book => book.shelf === "wantToRead"
-    );
+    )
     const read = books.filter(
       book => book.shelf === "read"
-    );
+    )
 
     return(
       <div className="list-books">

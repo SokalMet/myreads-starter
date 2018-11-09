@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 
 const Book = (props) => {
     return (
@@ -48,7 +48,7 @@ const Book = (props) => {
           ))}
         </ol>
       </div>
-    );
+    )
 }
 
-export default Book;
+export default Book
