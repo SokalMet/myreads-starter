@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import {Route} from 'react-router-dom'
 import SearchBook from "./SearchBook"
-import HomePage from "./Home"
+import HomePage from "./HomePage"
 
 const BooksApp = () => {
   return (
