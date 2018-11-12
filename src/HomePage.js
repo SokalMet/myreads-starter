@@ -38,7 +38,6 @@ class HomePage extends Component {
     const read = books.filter(
       book => book.shelf === "read"
     )
-    const myHomePageBooks = [currentlyReading, wantToRead, read]
 
     return (
       <div className="list-books">
