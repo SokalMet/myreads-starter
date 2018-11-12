@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from "./BooksAPI"
 
-import Book from "./Book"
+import BookShelf from "./BookShelf"
 
 class HomePage extends Component {
   state = {
@@ -13,8 +13,7 @@ class HomePage extends Component {
       this.setState({ books })
     })
   }
-  changeShelf = (e, book) => {
-    const shelf = e.target.value
+  changeShelf = (book, shelf) => {
     book.shelf = shelf
 
     BooksAPI.update(book, shelf).then(() => {
@@ -47,7 +46,7 @@ class HomePage extends Component {
             <div className="bookshelf">
               <h2 className="bookshelf-title">Currently Reading</h2>
               {currentlyReading.length > 0 &&
-              <Book
+              <BookShelf
                 filteredBooks={currentlyReading}
                 changeShelf={this.changeShelf}
               />}
@@ -55,7 +54,7 @@ class HomePage extends Component {
             <div className="bookshelf">
               <h2 className="bookshelf-title">Want to Read</h2>
               {wantToRead.length > 0 &&
-              <Book
+              <BookShelf
                 filteredBooks={wantToRead}
                 changeShelf={this.changeShelf}
               />}
@@ -63,7 +62,7 @@ class HomePage extends Component {
             <div className="bookshelf">
               <h2 className="bookshelf-title">Read</h2>
               {read.length > 0 &&
-              <Book
+              <BookShelf
                 filteredBooks={read}
                 changeShelf={this.changeShelf}
               />}

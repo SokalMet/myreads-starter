@@ -1,6 +1,6 @@
 import React from "react"
 import {Link} from "react-router-dom"
-import Book from "./Book"
+import BookShelf from "./BookShelf"
 
 import * as BooksAPI from './BooksAPI'
 
@@ -45,9 +45,8 @@ class SearchBook extends React.Component {
     let hasShelf = this.state.myBooks.filter(myBook => myBook.id === book.id)
     return hasShelf.length ? "do_not_show" : "noneShelf"
   }
-  changeShelf = (e, filteredBook) => {
-    const shelf = e.target.value
-    filteredBook.shelf = e.target.value
+  changeShelf = (filteredBook, shelf) => {
+    filteredBook.shelf = shelf
 
     BooksAPI.update(filteredBook, shelf).then(() => {
       this.setState(state => ({
@@ -76,7 +75,7 @@ class SearchBook extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          <Book filteredBooks={this.state.queriedBooks} changeShelf={this.changeShelf}/>
+          <BookShelf filteredBooks={this.state.queriedBooks} changeShelf={this.changeShelf}/>
         </div>
       </div>
     )
