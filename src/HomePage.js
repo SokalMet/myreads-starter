@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from "./BooksAPI"
 
@@ -8,11 +8,13 @@ class HomePage extends Component {
   state = {
     books: []
   }
+
   componentDidMount() {
     BooksAPI.getAll().then(books => {
-      this.setState({ books })
+      this.setState({books})
     })
   }
+
   changeShelf = (book, shelf) => {
     book.shelf = shelf
 
@@ -24,6 +26,7 @@ class HomePage extends Component {
       }))
     })
   }
+
   render() {
     const books = this.state.books
     const currentlyReading = books.filter(
@@ -35,39 +38,29 @@ class HomePage extends Component {
     const read = books.filter(
       book => book.shelf === "read"
     )
+    const myHomePageBooks = [currentlyReading, wantToRead, read]
 
-    return(
+    return (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
-              {currentlyReading.length > 0 &&
-              <BookShelf
-                filteredBooks={currentlyReading}
-                changeShelf={this.changeShelf}
-              />}
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to Read</h2>
-              {wantToRead.length > 0 &&
-              <BookShelf
-                filteredBooks={wantToRead}
-                changeShelf={this.changeShelf}
-              />}
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-              {read.length > 0 &&
-              <BookShelf
-                filteredBooks={read}
-                changeShelf={this.changeShelf}
-              />}
-            </div>
-          </div>
+          {<BookShelf
+            shelfName="Currently Reading"
+            filteredBooks={currentlyReading}
+            changeShelf={this.changeShelf}
+          />}
+          {<BookShelf
+            shelfName="Want to read"
+            filteredBooks={wantToRead}
+            changeShelf={this.changeShelf}
+          />}
+          {<BookShelf
+            shelfName="Read"
+            filteredBooks={read}
+            changeShelf={this.changeShelf}
+          />}
         </div>
         <div className="open-search">
           <Link to='/search'>Add a book</Link>
