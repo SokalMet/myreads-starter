@@ -31,7 +31,7 @@ class Book extends Component {
                 Want to Read
               </option>
               <option value="read">Read</option>
-              <option value="noneShelf">None</option>
+              <option value="book_for_search">None</option>
             </select>
           </div>
         </div>

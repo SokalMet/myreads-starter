@@ -13,7 +13,7 @@ class SearchBook extends React.Component {
   updateBooksShelves (books) {
     (books && books.length) ?
       (books = books.map(book => {
-        book.shelf = this.addShelf(book)
+        book.shelf = this.addBookToSearchShelf(book)
         return book
       }),
       this.setState(() => {
@@ -41,9 +41,9 @@ class SearchBook extends React.Component {
       })
     ) : this.setState({queriedBooks: [], enteredText: ''})
   }
-  addShelf(book) {
+  addBookToSearchShelf(book) {
     let hasShelf = this.state.myBooks.filter(myBook => myBook.id === book.id)
-    return hasShelf.length ? "do_not_show" : "noneShelf"
+    return hasShelf.length ? "book_for_search" : "none"
   }
   changeShelf = (filteredBook, shelf) => {
     filteredBook.shelf = shelf

@@ -9,7 +9,7 @@ const BookShelf = function (props) {
     <div className="bookshelf-books">
       <ol className="books-grid">
         {props.filteredBooks.length > 0 &&
-        props.filteredBooks.map(book => (book.shelf !== "do_not_show" &&
+        props.filteredBooks.map(book => (book.shelf !== "book_for_search" &&
           <li key={book.id}>
             <Book
               book={book}
