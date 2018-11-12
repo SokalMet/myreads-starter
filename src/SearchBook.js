@@ -10,6 +10,22 @@ class SearchBook extends React.Component {
     queriedBooks: [],
     myBooks: []
   }
+  updateBooksShelves (books) {
+    if(books && books.length) {
+      books = books.map(book => {
+        book.shelf = this.addShelf(book)
+        return book
+      })
+
+      this.setState(() => {
+        return {queriedBooks: books}
+      })
+    } else {
+      this.setState(() => {
+        return {queriedBooks: []}
+      })
+    }
+  }
   componentDidMount() {
     BooksAPI.getAll().then(myBooks => {
       this.setState({ myBooks })
@@ -20,26 +36,11 @@ class SearchBook extends React.Component {
     this.search_books(enteredText)
   }
   search_books = (serchText) => {
-    if(serchText) {
+    (serchText) ? (
       BooksAPI.search(serchText).then((books) => {
-        if(books && books.length) {
-          books = books.map(book => {
-            book.shelf = this.addShelf(book)
-            return book
-          })
-
-          this.setState(() => {
-            return {queriedBooks: books}
-          })
-        } else {
-          this.setState(() => {
-            return {queriedBooks: []}
-          })
-        }
+        this.updateBooksShelves(books)
       })
-    } else {
-      this.setState({queriedBooks: [], enteredText: ''})
-    }
+    ) : this.setState({queriedBooks: [], enteredText: ''})
   }
   addShelf(book) {
     let hasShelf = this.state.myBooks.filter(myBook => myBook.id === book.id)
