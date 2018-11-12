@@ -14,12 +14,8 @@ class HomePage extends Component {
     })
   }
   changeShelf = (e, book) => {
-    const books = this.state.books
     const shelf = e.target.value
     book.shelf = shelf
-    this.setState({
-      books
-    })
 
     BooksAPI.update(book, shelf).then(() => {
       this.setState(state => ({

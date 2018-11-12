@@ -46,12 +46,8 @@ class SearchBook extends React.Component {
     return hasShelf.length ? "do_not_show" : "noneShelf"
   }
   changeShelf = (e, filteredBook) => {
-    const queriedBooks = this.state.queriedBooks
     const shelf = e.target.value
     filteredBook.shelf = e.target.value
-    this.setState({
-      queriedBooks
-    })
 
     BooksAPI.update(filteredBook, shelf).then(() => {
       this.setState(state => ({
