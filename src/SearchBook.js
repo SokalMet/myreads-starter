@@ -11,20 +11,19 @@ class SearchBook extends React.Component {
     myBooks: []
   }
   updateBooksShelves (books) {
-    if(books && books.length) {
-      books = books.map(book => {
+    (books && books.length) ?
+      (books = books.map(book => {
         book.shelf = this.addShelf(book)
         return book
-      })
-
+      }),
       this.setState(() => {
         return {queriedBooks: books}
-      })
-    } else {
+      }))
+     :
       this.setState(() => {
         return {queriedBooks: []}
       })
-    }
+
   }
   componentDidMount() {
     BooksAPI.getAll().then(myBooks => {
